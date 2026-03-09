@@ -32,11 +32,11 @@ export default function SettingsPage() {
             <div className="p-4 bg-secondary rounded-lg">
               <h3 className="font-medium mb-2">✅ Active Features</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-green-500" /> Text Explanations — AI-powered ML explanations</li>
-                <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-green-500" /> Code Generation — Working Python code examples</li>
-                <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-green-500" /> Audio Learning — Browser-based text-to-speech</li>
-                <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-green-500" /> Image Visualization — AI diagram descriptions</li>
-                <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-green-500" /> Multi-Language — 12+ language support</li>
+                <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" /> Text Explanations — AI-powered ML explanations</li>
+                <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" /> Code Generation — Working Python code examples</li>
+                <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" /> Audio Learning — Browser-based text-to-speech</li>
+                <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" /> Image Visualization — AI diagram descriptions</li>
+                <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" /> Multi-Language — 12+ language support</li>
               </ul>
             </div>
 
