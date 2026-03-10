@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Headphones, Loader2, Sparkles, Play, Pause, Download } from "lucide-react";
+import { Headphones, Loader2, Sparkles, Play, Pause, Download, Save, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { useHistory } from "@/hooks/use-history";
 import ReactMarkdown from "react-markdown";
 import LanguageSelector from "@/components/LanguageSelector";
 import DepthSelector from "@/components/DepthSelector";
@@ -17,8 +18,27 @@ export default function AudioLearning() {
   const [script, setScript] = useState("");
   const [loading, setLoading] = useState(false);
   const [speaking, setSpeaking] = useState(false);
+  const [savedId, setSavedId] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const { addItem, toggleFavorite } = useHistory();
+
+  const saveToHistory = () => {
+    if (!script) return;
+    const id = addItem({ topic, mode: "audio", depth, language, content: script });
+    setSavedId(id);
+    toast.success("Saved to history!");
+  };
+
+  const toggleFav = () => {
+    if (savedId) { toggleFavorite(savedId); toast.success("Toggled favorite!"); }
+    else {
+      const id = addItem({ topic, mode: "audio", depth, language, content: script });
+      setSavedId(id);
+      toggleFavorite(id);
+      toast.success("Saved & favorited!");
+    }
+  };
 
   const generate = async () => {
     if (!topic.trim()) { toast.error("Please enter a topic"); return; }
@@ -124,6 +144,12 @@ export default function AudioLearning() {
                     {speaking ? "Playing... Click pause to stop" : "Click play to listen"}
                   </p>
                 </div>
+                <Button variant="outline" size="sm" onClick={saveToHistory} className="border-border">
+                  <Save className="h-4 w-4 mr-1" /> Save
+                </Button>
+                <Button variant="outline" size="sm" onClick={toggleFav} className="border-border">
+                  <Star className={`h-4 w-4 mr-1 ${savedId ? "fill-yellow-400 text-yellow-400" : ""}`} />
+                </Button>
                 <Button variant="outline" size="sm" onClick={downloadScript} className="border-border">
                   <Download className="h-4 w-4 mr-1" /> Script
                 </Button>

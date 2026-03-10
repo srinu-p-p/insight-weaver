@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { BookOpen, Copy, Download, Loader2, Sparkles } from "lucide-react";
+import { BookOpen, Copy, Download, Loader2, Sparkles, Save, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { useHistory } from "@/hooks/use-history";
 import ReactMarkdown from "react-markdown";
 import LanguageSelector from "@/components/LanguageSelector";
 import DepthSelector from "@/components/DepthSelector";
@@ -16,7 +17,26 @@ export default function TextExplanation() {
   const [language, setLanguage] = useState<LanguageCode>("en");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [savedId, setSavedId] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const { addItem, toggleFavorite } = useHistory();
+
+  const saveToHistory = () => {
+    if (!content) return;
+    const id = addItem({ topic, mode: "text", depth, language, content });
+    setSavedId(id);
+    toast.success("Saved to history!");
+  };
+
+  const toggleFav = () => {
+    if (savedId) { toggleFavorite(savedId); toast.success("Toggled favorite!"); }
+    else {
+      const id = addItem({ topic, mode: "text", depth, language, content });
+      setSavedId(id);
+      toggleFavorite(id);
+      toast.success("Saved & favorited!");
+    }
+  };
 
   const generate = async () => {
     if (!topic.trim()) { toast.error("Please enter a topic"); return; }
@@ -80,6 +100,12 @@ export default function TextExplanation() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold">Your Explanation</h2>
               <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={saveToHistory} className="border-border">
+                  <Save className="h-4 w-4 mr-1" /> Save
+                </Button>
+                <Button variant="outline" size="sm" onClick={toggleFav} className="border-border">
+                  <Star className={`h-4 w-4 mr-1 ${savedId ? "fill-yellow-400 text-yellow-400" : ""}`} /> Favorite
+                </Button>
                 <Button variant="outline" size="sm" onClick={copy} className="border-border">
                   <Copy className="h-4 w-4 mr-1" /> Copy
                 </Button>
