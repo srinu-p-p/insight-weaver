@@ -18,8 +18,27 @@ export default function AudioLearning() {
   const [script, setScript] = useState("");
   const [loading, setLoading] = useState(false);
   const [speaking, setSpeaking] = useState(false);
+  const [savedId, setSavedId] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const { addItem, toggleFavorite } = useHistory();
+
+  const saveToHistory = () => {
+    if (!script) return;
+    const id = addItem({ topic, mode: "audio", depth, language, content: script });
+    setSavedId(id);
+    toast.success("Saved to history!");
+  };
+
+  const toggleFav = () => {
+    if (savedId) { toggleFavorite(savedId); toast.success("Toggled favorite!"); }
+    else {
+      const id = addItem({ topic, mode: "audio", depth, language, content: script });
+      setSavedId(id);
+      toggleFavorite(id);
+      toast.success("Saved & favorited!");
+    }
+  };
 
   const generate = async () => {
     if (!topic.trim()) { toast.error("Please enter a topic"); return; }
