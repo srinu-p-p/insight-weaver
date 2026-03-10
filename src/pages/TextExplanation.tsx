@@ -100,6 +100,12 @@ export default function TextExplanation() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold">Your Explanation</h2>
               <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={saveToHistory} className="border-border">
+                  <Save className="h-4 w-4 mr-1" /> Save
+                </Button>
+                <Button variant="outline" size="sm" onClick={toggleFav} className="border-border">
+                  <Star className={`h-4 w-4 mr-1 ${savedId ? "fill-yellow-400 text-yellow-400" : ""}`} /> Favorite
+                </Button>
                 <Button variant="outline" size="sm" onClick={copy} className="border-border">
                   <Copy className="h-4 w-4 mr-1" /> Copy
                 </Button>

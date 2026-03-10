@@ -9,6 +9,7 @@ const navItems = [
   { path: "/code", label: "Code", icon: Code },
   { path: "/audio", label: "Audio", icon: Headphones },
   { path: "/images", label: "Images", icon: Image },
+  { path: "/history", label: "History", icon: History },
   { path: "/settings", label: "Settings", icon: Settings },
   { path: "/about", label: "About", icon: Info },
 ];

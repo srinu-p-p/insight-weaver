@@ -137,6 +137,12 @@ export default function CodeGeneration() {
                     <h2 className="text-lg font-semibold">Python Code</h2>
                   </div>
                   <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={saveToHistory} className="border-border">
+                      <Save className="h-4 w-4 mr-1" /> Save
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={toggleFav} className="border-border">
+                      <Star className={`h-4 w-4 mr-1 ${savedId ? "fill-yellow-400 text-yellow-400" : ""}`} /> Favorite
+                    </Button>
                     <Button variant="outline" size="sm" onClick={copyCode} className="border-border">
                       <Copy className="h-4 w-4 mr-1" /> Copy
                     </Button>

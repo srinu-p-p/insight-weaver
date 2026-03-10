@@ -85,10 +85,22 @@ export default function ImageVisualization() {
             <DepthSelector value={depth} onChange={setDepth} />
             <LanguageSelector value={language} onChange={setLanguage} />
           </div>
-          <Button onClick={generate} disabled={loading} className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary">
-            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-            {loading ? "Generating..." : "Generate Visualizations"}
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={generate} disabled={loading} className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary">
+              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+              {loading ? "Generating..." : "Generate Visualizations"}
+            </Button>
+            {content && (
+              <>
+                <Button variant="outline" size="sm" onClick={saveToHistory} className="border-border">
+                  <Save className="h-4 w-4 mr-1" /> Save
+                </Button>
+                <Button variant="outline" size="sm" onClick={toggleFav} className="border-border">
+                  <Star className={`h-4 w-4 mr-1 ${savedId ? "fill-yellow-400 text-yellow-400" : ""}`} /> Favorite
+                </Button>
+              </>
+            )}
+          </div>
         </motion.div>
 
         {content && (

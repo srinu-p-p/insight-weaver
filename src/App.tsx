@@ -10,6 +10,7 @@ import TextExplanation from "@/pages/TextExplanation";
 import CodeGeneration from "@/pages/CodeGeneration";
 import AudioLearning from "@/pages/AudioLearning";
 import ImageVisualization from "@/pages/ImageVisualization";
+import HistoryPage from "@/pages/HistoryPage";
 import SettingsPage from "@/pages/SettingsPage";
 import AboutPage from "@/pages/AboutPage";
 import NotFound from "@/pages/NotFound";
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/code" element={<CodeGeneration />} />
           <Route path="/audio" element={<AudioLearning />} />
           <Route path="/images" element={<ImageVisualization />} />
+          <Route path="/history" element={<HistoryPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<NotFound />} />

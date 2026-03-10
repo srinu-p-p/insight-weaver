@@ -144,6 +144,12 @@ export default function AudioLearning() {
                     {speaking ? "Playing... Click pause to stop" : "Click play to listen"}
                   </p>
                 </div>
+                <Button variant="outline" size="sm" onClick={saveToHistory} className="border-border">
+                  <Save className="h-4 w-4 mr-1" /> Save
+                </Button>
+                <Button variant="outline" size="sm" onClick={toggleFav} className="border-border">
+                  <Star className={`h-4 w-4 mr-1 ${savedId ? "fill-yellow-400 text-yellow-400" : ""}`} />
+                </Button>
                 <Button variant="outline" size="sm" onClick={downloadScript} className="border-border">
                   <Download className="h-4 w-4 mr-1" /> Script
                 </Button>
