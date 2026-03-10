@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Brain, BookOpen, Code, Headphones, Image, History, Settings, Info, Menu, X } from "lucide-react";
+import { Brain, BookOpen, Code, Headphones, Image, History, GraduationCap, Settings, Info, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
