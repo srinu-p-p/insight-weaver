@@ -17,7 +17,26 @@ export default function TextExplanation() {
   const [language, setLanguage] = useState<LanguageCode>("en");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [savedId, setSavedId] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const { addItem, toggleFavorite } = useHistory();
+
+  const saveToHistory = () => {
+    if (!content) return;
+    const id = addItem({ topic, mode: "text", depth, language, content });
+    setSavedId(id);
+    toast.success("Saved to history!");
+  };
+
+  const toggleFav = () => {
+    if (savedId) { toggleFavorite(savedId); toast.success("Toggled favorite!"); }
+    else {
+      const id = addItem({ topic, mode: "text", depth, language, content });
+      setSavedId(id);
+      toggleFavorite(id);
+      toast.success("Saved & favorited!");
+    }
+  };
 
   const generate = async () => {
     if (!topic.trim()) { toast.error("Please enter a topic"); return; }
