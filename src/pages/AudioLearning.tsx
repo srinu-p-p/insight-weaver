@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Headphones, Loader2, Sparkles, Play, Pause, Download } from "lucide-react";
+import { Headphones, Loader2, Sparkles, Play, Pause, Download, Save, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { useHistory } from "@/hooks/use-history";
 import ReactMarkdown from "react-markdown";
 import LanguageSelector from "@/components/LanguageSelector";
 import DepthSelector from "@/components/DepthSelector";
