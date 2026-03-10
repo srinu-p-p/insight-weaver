@@ -11,6 +11,7 @@ import CodeGeneration from "@/pages/CodeGeneration";
 import AudioLearning from "@/pages/AudioLearning";
 import ImageVisualization from "@/pages/ImageVisualization";
 import HistoryPage from "@/pages/HistoryPage";
+import QuizPage from "@/pages/QuizPage";
 import SettingsPage from "@/pages/SettingsPage";
 import AboutPage from "@/pages/AboutPage";
 import NotFound from "@/pages/NotFound";
