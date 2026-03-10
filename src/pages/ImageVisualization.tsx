@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { ImageIcon, Loader2, Sparkles } from "lucide-react";
+import { ImageIcon, Loader2, Sparkles, Save, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { useHistory } from "@/hooks/use-history";
 import ReactMarkdown from "react-markdown";
 import LanguageSelector from "@/components/LanguageSelector";
 import DepthSelector from "@/components/DepthSelector";
