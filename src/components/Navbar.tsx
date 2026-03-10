@@ -10,6 +10,7 @@ const navItems = [
   { path: "/audio", label: "Audio", icon: Headphones },
   { path: "/images", label: "Images", icon: Image },
   { path: "/history", label: "History", icon: History },
+  { path: "/quiz", label: "Quiz", icon: GraduationCap },
   { path: "/settings", label: "Settings", icon: Settings },
   { path: "/about", label: "About", icon: Info },
 ];

@@ -32,6 +32,7 @@ const App = () => (
           <Route path="/audio" element={<AudioLearning />} />
           <Route path="/images" element={<ImageVisualization />} />
           <Route path="/history" element={<HistoryPage />} />
+          <Route path="/quiz" element={<QuizPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<NotFound />} />

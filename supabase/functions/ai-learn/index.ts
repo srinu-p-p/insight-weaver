@@ -102,7 +102,7 @@ Make the prompts detailed and specific for generating educational technical diag
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
         ],
-        stream: true,
+        stream: useStream,
       }),
     });
 
@@ -121,6 +121,14 @@ Make the prompts detailed and specific for generating educational technical diag
       console.error("AI gateway error:", response.status, t);
       return new Response(JSON.stringify({ error: "AI service error" }), {
         status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (!useStream) {
+      const data = await response.json();
+      const text = data.choices?.[0]?.message?.content || "";
+      return new Response(text, {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
