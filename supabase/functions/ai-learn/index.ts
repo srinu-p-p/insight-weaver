@@ -10,7 +10,7 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { topic, mode, depth, language } = await req.json();
+    const { topic, mode, depth, language, quizMode } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
@@ -20,8 +20,39 @@ serve(async (req) => {
 
     let systemPrompt = "";
     let userPrompt = "";
+    let useStream = true;
 
-    if (mode === "text") {
+    if (mode === "quiz") {
+      useStream = false;
+      const count = quizMode === "flashcard" ? 8 : 5;
+      systemPrompt = `You are an expert ML/AI quiz generator. ${langInstruction}
+You MUST ONLY generate questions about AI, ML, or Deep Learning topics.
+If the topic is NOT related to AI/ML/DL, respond with a JSON object: {"error": "I can only generate quizzes for AI/ML/DL topics."}`;
+
+      if (quizMode === "flashcard") {
+        userPrompt = `Generate exactly ${count} flashcards for the ML/AI topic: "${topic}"
+Depth: ${depth}
+
+Respond ONLY with a valid JSON array. Each element must have:
+- "front": a concise question or term
+- "back": a clear, detailed answer (2-3 sentences)
+
+Example format:
+[{"front":"What is gradient descent?","back":"Gradient descent is an optimization algorithm..."}]`;
+      } else {
+        userPrompt = `Generate exactly ${count} multiple-choice questions for the ML/AI topic: "${topic}"
+Depth: ${depth}
+
+Respond ONLY with a valid JSON array. Each element must have:
+- "question": the question text
+- "options": array of exactly 4 answer strings
+- "correctIndex": index (0-3) of the correct answer
+- "explanation": brief explanation of why the answer is correct
+
+Example format:
+[{"question":"What is...?","options":["A","B","C","D"],"correctIndex":1,"explanation":"Because..."}]`;
+      }
+    } else if (mode === "text") {
       systemPrompt = `You are an expert Machine Learning tutor. ${langInstruction}
 You MUST ONLY respond to topics related to AI, ML, or Deep Learning.
 If the topic is NOT related to AI/ML/DL, respond with: "I apologize, but I can only provide information about Artificial Intelligence, Machine Learning, and Deep Learning topics."`;
@@ -102,7 +133,7 @@ Make the prompts detailed and specific for generating educational technical diag
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
         ],
-        stream: true,
+        stream: useStream,
       }),
     });
 
@@ -121,6 +152,14 @@ Make the prompts detailed and specific for generating educational technical diag
       console.error("AI gateway error:", response.status, t);
       return new Response(JSON.stringify({ error: "AI service error" }), {
         status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (!useStream) {
+      const data = await response.json();
+      const text = data.choices?.[0]?.message?.content || "";
+      return new Response(text, {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
